@@ -26,7 +26,6 @@ class RadiusViewModel @Inject constructor(private val radiusRepository: RadiusRe
             radiusRepository.getRadiusData().collect {
                 _state.value = RadiusUiState.RadiusData(it)
             }
-            radiusRepository.getRadiusDataFromApi()
         }
     }
 
@@ -46,21 +45,23 @@ class RadiusViewModel @Inject constructor(private val radiusRepository: RadiusRe
 
             if (optionsWithId.isEmpty() && optionsWithFacilityId.isEmpty()) {
 
-                val exclusions: List<Boolean> = option.exclusions.map { ex ->
+                val exc: List<Boolean> = option.exclusions.map { ex ->
                     val op = selectedOptions.filter { opt ->
                         opt.id == ex
                     }
                     op.isEmpty()
                 }
 
-                if (exclusions.filter { it == true }.isEmpty()) {
+                val canInsert = exc.filter { it }
+
+                return if (canInsert.size == exc.size) {
                     selectedOptions.add(option)
-                    return true
+                    true
                 } else {
                     _state.value =
                         RadiusUiState.Error("These two options are not compatible with each other")
 
-                    return false
+                    false
                 }
 
             } else {

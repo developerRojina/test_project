@@ -5,7 +5,7 @@
       <map>
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.28229166666666666" />
         <entry key="app/src/main/res/layout/content_main.xml" value="0.28229166666666666" />
-        <entry key="app/src/main/res/layout/fragment_radius.xml" value="0.27037037037037037" />
+        <entry key="app/src/main/res/layout/fragment_radius.xml" value="0.25" />
         <entry key="app/src/main/res/layout/item_facility.xml" value="0.28125" />
         <entry key="app/src/main/res/layout/item_options.xml" value="0.28125" />
       </map>

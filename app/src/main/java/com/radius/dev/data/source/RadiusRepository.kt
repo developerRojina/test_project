@@ -6,6 +6,8 @@ import com.radius.dev.data.source.data_store.DataStoreManager
 import com.radius.dev.data.source.local.LocalDataSource
 import com.radius.dev.data.source.remote.RemoteDataSource
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 class RadiusRepository @Inject constructor(
@@ -18,7 +20,20 @@ class RadiusRepository @Inject constructor(
 ) {
 
 
-    fun getRadiusData(): Flow<List<Facility>> = localDataSource.getFacilities()
+    suspend fun getRadiusData(): Flow<List<Facility>> {
+        val currentTime = System.currentTimeMillis()
+        val apiFetchTime = dataStoreManager.apiFetchTime.first()
+        if (apiFetchTime != null) {
+            val difference = currentTime - apiFetchTime
+            val differenceInDays = TimeUnit.DAYS.convert(difference, TimeUnit.MILLISECONDS)
+            if (differenceInDays > 1) {
+                getRadiusDataFromApi()
+            }
+        } else {
+            getRadiusDataFromApi()
+        }
+        return localDataSource.getFacilities()
+    }
 
 
     suspend fun getRadiusDataFromApi() {
@@ -27,20 +42,6 @@ class RadiusRepository @Inject constructor(
         localDataSource.insertDataOnRealm(data)
     }
 }
-
-/*  val currentTime = System.currentTimeMillis()
-  val apiFetchTime = dataStoreManager.apiFetchTime.first()
-  if (apiFetchTime != null) {
-      val difference = currentTime - apiFetchTime
-      val differenceInDays = TimeUnit.DAYS.convert(difference, TimeUnit.MILLISECONDS)
-      if (differenceInDays > 1) {
-          getRadiusDataFromApi()
-      } else {
-
-      }
-  } else {
-      getRadiusDataFromApi()
-  }*/
 
 
 

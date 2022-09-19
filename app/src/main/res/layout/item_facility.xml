@@ -15,8 +15,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="@{facility.name}"
-        android:textColor="#000000"
-        android:textSize="18sp"
-        android:textStyle="bold">
+        style="@style/TextAppearance.AppCompat.Title">
+
     </TextView>
 </layout>
