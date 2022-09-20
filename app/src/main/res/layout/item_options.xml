@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -9,13 +10,16 @@
             type="com.radius.dev.data.model.Option" />
     </data>
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         style="@style/Widget.MaterialComponents.Button.OutlinedButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
+        app:iconGravity="textEnd"
+        app:iconSize="20dp"
+        app:setIcon="@{option.icon}"
         android:text="@{option.name}">
 
-    </Button>
+    </com.google.android.material.button.MaterialButton>
 </layout>

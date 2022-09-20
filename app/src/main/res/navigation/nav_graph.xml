@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/FirstFragment"
         android:name="com.radius.dev.RadiusFragment"
-        android:label="@string/first_fragment_label"
+        android:label="Radius"
         tools:layout="@layout/fragment_radius">
     </fragment>
 </navigation>

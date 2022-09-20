@@ -9,12 +9,13 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvRadius"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_margin="16dp"
         android:orientation="vertical"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/cgSelectedItems"
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.chip.ChipGroup
@@ -22,10 +23,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
         android:layout_marginHorizontal="16dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/rvRadius" />
+        app:layout_constraintBottom_toTopOf="@id/btnDeleteSelectedItems" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnDeleteSelectedItems"
@@ -34,5 +36,5 @@
         android:layout_marginHorizontal="16dp"
         android:layout_marginVertical="16dp"
         android:text="Delete Selection"
-        app:layout_constraintTop_toBottomOf="@id/cgSelectedItems" />
+        app:layout_constraintBottom_toBottomOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,10 +1,9 @@
-package com.radius.dev
+package com.radius.dev.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.radius.dev.data.model.Option
 import com.radius.dev.data.source.RadiusRepository
-import com.radius.dev.ui.RadiusUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -29,10 +28,10 @@ class RadiusViewModel @Inject constructor(private val radiusRepository: RadiusRe
         }
     }
 
-    fun isSelectionValid(option: Option): Boolean {
+    fun isSelectionValid(option: Option): Pair<Boolean, String> {
         if (selectedOptions.isEmpty()) {
             selectedOptions.add(option)
-            return true
+            return Pair(true, "")
         } else {
             val optionsWithId = selectedOptions.filter {
                 option.id == it.id
@@ -56,22 +55,20 @@ class RadiusViewModel @Inject constructor(private val radiusRepository: RadiusRe
 
                 return if (canInsert.size == exc.size) {
                     selectedOptions.add(option)
-                    true
+                    Pair(true, "")
                 } else {
-                    _state.value =
-                        RadiusUiState.Error("These two options are not compatible with each other")
+                    Pair(false, "These two options are not compatible with each other")
 
-                    false
                 }
 
             } else {
-                _state.value =
+                val msg =
                     if (optionsWithFacilityId.isEmpty())
-                        RadiusUiState.Error("Please select the option from different facility type")
+                        "Please select the option from different facility type"
                     else
-                        RadiusUiState.Error("Please select different option")
+                        "Please select different option"
 
-                return false
+                return Pair(false, msg)
             }
 
         }

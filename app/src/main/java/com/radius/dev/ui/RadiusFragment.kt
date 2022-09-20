@@ -17,6 +17,7 @@ import com.radius.dev.databinding.FragmentRadiusBinding
 import com.radius.dev.ui.FacilityAdapter
 import com.radius.dev.ui.OptionAdapter
 import com.radius.dev.ui.RadiusUiState
+import com.radius.dev.ui.RadiusViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -53,7 +54,7 @@ class RadiusFragment : Fragment() {
                     viewModel.state.collect { state: RadiusUiState ->
                         when (state) {
                             is RadiusUiState.Error -> {
-                                Toast.makeText(context, state.issue, Toast.LENGTH_LONG).show()
+
                             }
                             is RadiusUiState.LoadingFromApi -> {}
                             is RadiusUiState.Init -> {}
@@ -67,8 +68,15 @@ class RadiusFragment : Fragment() {
                                     val optionsAdapter = OptionAdapter(it.options,
                                         object : OptionAdapter.OptionClickListener {
                                             override fun onOptionClick(option: Option) {
-                                                if (viewModel.isSelectionValid(option)) {
+                                                val isValid = viewModel.isSelectionValid(option)
+                                                if (isValid.first) {
                                                     addChips(option)
+                                                } else {
+                                                    Toast.makeText(
+                                                        context,
+                                                        isValid.second,
+                                                        Toast.LENGTH_LONG
+                                                    ).show()
                                                 }
 
                                             }
